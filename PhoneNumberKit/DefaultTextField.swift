@@ -21,7 +21,7 @@ open class DefaultTextField: UITextField {
         self.layer.masksToBounds = true
     }
 
-    override func draw(_ rect: CGRect) {
+    override open func draw(_ rect: CGRect) {
         drawBorderColor(UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00))
     }
 }
