@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /// Custom text field that formats phone numbers
-open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
+open class PhoneNumberTextField: DefaultTextField, UITextFieldDelegate {
     
     let phoneNumberKit = PhoneNumberKit()
     
