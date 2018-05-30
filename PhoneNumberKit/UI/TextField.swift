@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 /// Custom text field that formats phone numbers
-open class PhoneNumberTextField: DefaultTextField, UITextFieldDelegate {
+open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
     
     let phoneNumberKit = PhoneNumberKit()
     
@@ -136,9 +136,22 @@ open class PhoneNumberTextField: DefaultTextField, UITextFieldDelegate {
         self.setup()
     }
     
-    func setup(){
+    fileprivate func styleTextField() {
+        let border = CALayer()
+        let width = CGFloat(1.0)
+    
+        border.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00).cgColor
+        border.borderWidth = width
+        border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: frame.size.height)
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+    }
+    
+    func setup() {
+        self.borderStyle = .none
         self.autocorrectionType = .no
         self.keyboardType = UIKeyboardType.phonePad
+        styleTextField()
         super.delegate = self
     }
     
