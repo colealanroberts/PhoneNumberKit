@@ -136,23 +136,38 @@ open class PhoneNumberTextField: UITextField, UITextFieldDelegate {
         self.setup()
     }
     
-    fileprivate func styleTextField() {
+    @objc func didBeginEditing() {
+        drawBorderColor(color: UIColor(red: 0.24, green: 0.71, blue: 0.88, alpha: 1.00))
+    }
+    
+    @objc func didEndEditing() {
+        drawBorderColor(color: UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00))
+    }
+    
+    fileprivate func drawBorderColor(color: UIColor) {
         let border = CALayer()
         let width = CGFloat(1.0)
-    
-        border.borderColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00).cgColor
+        
+        layer.addSublayer(border)
+        layer.masksToBounds = true
+        
+        border.borderColor = color.cgColor
         border.borderWidth = width
-        border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: frame.size.height)
-        self.layer.addSublayer(border)
-        self.layer.masksToBounds = true
+        border.frame = CGRect(x: 0, y: frame.size.height - width, width: frame.size.width, height: frame.size.height)
+        
+        UIView.animate(withDuration: 0.2) {
+            border.borderColor = color.cgColor
+        }
     }
     
     func setup() {
-        self.borderStyle = .none
-        self.autocorrectionType = .no
-        self.keyboardType = UIKeyboardType.phonePad
-        styleTextField()
-        super.delegate = self
+        borderStyle = .none
+        autocorrectionType = .no
+        keyboardType = UIKeyboardType.phonePad
+        delegate = self
+        addTarget(self, action: #selector(didBeginEditing), for: .editingDidBegin)
+        addTarget(self, action: #selector(didEndEditing), for: .editingDidEnd)
+        drawBorderColor(color: UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1.00))
     }
     
     
